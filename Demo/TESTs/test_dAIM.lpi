@@ -38,12 +38,17 @@
         <PackageName Value="LCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="1">
+    <Units Count="2">
       <Unit0>
         <Filename Value="test_dAIM.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="test_dAIM"/>
       </Unit0>
+      <Unit1>
+        <Filename Value="..\..\src\dAim_CountB.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="dAim_CountB"/>
+      </Unit1>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -54,6 +59,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="..\..\src"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>

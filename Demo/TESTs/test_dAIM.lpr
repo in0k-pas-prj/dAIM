@@ -7,6 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
+  dAim_CountB,
   Forms, fpcunittestrunner, GuiTestRunner;
 
 {$R *.res}
