@@ -1,0 +1,6 @@
+[submodule "src"]
+	path = src
+	url = X:/SINGLE/dAIM/dAIM_src
+[submodule "tst"]
+	path = tst
+	url = X:/SINGLE/dAIM/dAIM_tst
