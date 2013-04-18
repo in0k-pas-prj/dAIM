@@ -1,5 +1,7 @@
-Demo/TESTs/lib/*
-Demo/TESTs/backup/*
-Demo/TESTs/*.exe
-Demo/TESTs/*.res
-Demo/TESTs/*.lps
+Thumbs.db
+*.exe
+*.res
+*.lps
+[Bb]ackup/
+[Ll]ib/
+

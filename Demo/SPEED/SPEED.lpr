@@ -1,4 +1,4 @@
-program test_dAIM;
+program SPEED;
 
 {$mode objfpc}{$H+}
 
@@ -6,15 +6,16 @@ uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
   cthreads,
   {$ENDIF}{$ENDIF}
-  Interfaces,
-  Forms, ALL_Tests_dAIM, fpcunittestrunner, GuiTestRunner;
+  Interfaces, // this includes the LCL widgetset
+  Forms, Unit1, dAim_CountB
+  { you can add units after this };
 
 {$R *.res}
 
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;
-  Application.CreateForm(TGUITestRunner, TestRunner);
+  Application.CreateForm(TForm1, Form1);
   Application.Run;
 end.
 
