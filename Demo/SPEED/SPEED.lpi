@@ -6,7 +6,7 @@
     <General>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="test_dAIM"/>
+      <Title Value="SPEED"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
       <Icon Value="0"/>
@@ -30,42 +30,49 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="2">
+    <RequiredPackages Count="1">
       <Item1>
-        <PackageName Value="fpcunittestrunner"/>
-      </Item1>
-      <Item2>
         <PackageName Value="LCL"/>
-      </Item2>
+      </Item1>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="3">
       <Unit0>
-        <Filename Value="test_dAIM.lpr"/>
+        <Filename Value="SPEED.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="test_dAIM"/>
+        <UnitName Value="SPEED"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\..\tst\ALL_Tests_dAIM.pas"/>
+        <Filename Value="Unit1.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="ALL_Tests_dAIM"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Unit1"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="..\..\src\dAim_CountB.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="dAim_CountB"/>
+      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="test_dAIM"/>
+      <Filename Value="SPEED"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\..\src;..\..\tst"/>
+      <OtherUnitFiles Value="..\..\src"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
+    <CodeGeneration>
+      <Optimizations>
+        <OptimizationLevel Value="0"/>
+      </Optimizations>
+    </CodeGeneration>
     <Linking>
-      <Debugging>
-        <UseHeaptrc Value="True"/>
-      </Debugging>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>
@@ -80,7 +87,7 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="4">
+    <Exceptions Count="3">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -90,9 +97,6 @@
       <Item3>
         <Name Value="EFOpenError"/>
       </Item3>
-      <Item4>
-        <Name Value="EAssertionFailedError"/>
-      </Item4>
     </Exceptions>
   </Debugging>
 </CONFIG>
