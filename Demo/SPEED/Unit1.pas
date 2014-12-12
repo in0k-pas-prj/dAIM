@@ -4,7 +4,7 @@ unit Unit1;
 
 interface
 
-uses  {LCLIntf, LCLProc, }windows, dAim_CountB,
+uses  {LCLIntf, LCLProc, }windows, dAimBB, dAimWP,
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls;
 
 type
@@ -14,9 +14,11 @@ type
   TForm1 = class(TForm)
     Button1: TButton;
     Button2: TButton;
+    Button3: TButton;
     Memo1: TMemo;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { private declarations }
   public
@@ -50,6 +52,10 @@ type
     procedure Execute; override;
    end;
 
+  tTestThread2=class(tTestThread)
+  protected
+    procedure Execute; override;
+   end;
 
 var
   Form1: TForm1;
@@ -78,18 +84,14 @@ end;
 procedure tTestThread.do_Start; //inline;
 var h:THandle;
 begin
-    h:=self.Handle;
-    h:=GetCurrentThread;
     d1:=GetTickCount;
-    GetThreadTimes(H,lpCreationTime_01,lpExitTime_01,lpKernelTime_01,lpUserTime_01);
+    GetThreadTimes(Handle,lpCreationTime_01,lpExitTime_01,lpKernelTime_01,lpUserTime_01);
 end;
 
 procedure tTestThread.do_Stop;  //inline;
 var h:THandle;
 begin
-    h:=self.Handle;
-    h:=GetCurrentThread;
-    GetThreadTimes(H,lpCreationTime_02,lpExitTime_02,lpKernelTime_02,lpUserTime_02);
+    GetThreadTimes(Handle,lpCreationTime_02,lpExitTime_02,lpKernelTime_02,lpUserTime_02);
     d2:=GetTickCount;
 end;
 
@@ -104,14 +106,14 @@ end;
 
 procedure tTestThread.Execute;
 var i,j:integer;
-    asd:array of byte;
+    asd:array of pointer;
 begin
     do_Start;
     //---
     for j:=1 to 10000 do begin
       for i:=1 to 254 do begin
          SetLength(asd,i);
-         asd[i-1]:=byte(i);
+         asd[i-1]:=self;//byte(i);
          SetLength(asd,0);
       end;
     end;
@@ -129,9 +131,29 @@ begin
     //---
     for j:=1 to 10000 do begin
       for i:=1 to 254 do begin
-         dAimB_INITialize(asd,i{,b});
-         dAimB_set_Value(asd,i-1,i);
-         dAimB_FINALize(asd);
+         dAimBB_INITialize(asd,i);
+         dAimBB_set_Value (asd,i-1,i);
+         dAimBB_FINALize  (asd);
+      end;
+    end;
+    //---
+    do_Stop;
+end;
+
+
+procedure tTestThread2.Execute;
+var i,j:integer;
+    asd:pointer;
+    b:byte;
+begin
+    b:=222;
+    do_Start;
+    //---
+    for j:=1 to 10000 do begin
+      for i:=1 to 254 do begin
+         dAimWP_INITialize(asd,i);
+         dAimWP_set_Value (asd,i-1,Self);
+         dAimWP_FINALize  (asd);
       end;
     end;
     //---
@@ -156,7 +178,7 @@ var lpCreationTime_02,
    d:dword;
 
    th:THandle;
-       asd:array of byte;
+       asd:array of pointer;
    thr:tTestThread;
    th1:tTestThread1;
 begin
@@ -246,6 +268,41 @@ var lpCreationTime_02,
 begin
    Application.ProcessMessages;
    thr:=tTestThread1.Create;
+   //with th1 do begin
+      thr.Resume;
+      thr.WaitFor;
+      thr.get_Results(lpCreationTime_02,lpExitTime_02,lpKernelTime_02,lpUserTime_02,d);
+      thr.Free;
+   //end;
+   //---
+   memo1.Lines.add('===');
+   memo1.Lines.Add(IntToStr(d));
+   memo1.Lines.Add('lpCreationTime = '+IntToStr(QWord(lpCreationTime_02)));
+   memo1.Lines.Add('lpExitTime = '+IntToStr(QWord(lpExitTime_02)));
+   memo1.Lines.Add('lpKernelTime = '+IntToStr(QWord(lpKernelTime_02)));
+   memo1.Lines.Add('lpUserTime = '+IntToStr(QWord(lpUserTime_02)));
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+var lpCreationTime_01,
+    lpExitTime_01,
+    lpKernelTime_01,
+    lpUserTime_01: TFileTime;
+var lpCreationTime_02,
+    lpExitTime_02,
+    lpKernelTime_02,
+    lpUserTime_02: TFileTime;
+   i:integer;
+   a:integer;
+   b:integer;
+   d:dword;
+
+   th:THandle;
+       asd:array of byte;
+   thr:tTestThread2;
+begin
+   Application.ProcessMessages;
+   thr:=tTestThread2.Create;
    //with th1 do begin
       thr.Resume;
       thr.WaitFor;
